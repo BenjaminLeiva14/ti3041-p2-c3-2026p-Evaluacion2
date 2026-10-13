@@ -1,0 +1,152 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | Recepción & visitas{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    :root {
+        --primary: #c2410c;
+        --secondary: #7c2d12;
+        --accent: #fb923c;
+        --primary-fg: #fff7ed;
+        --body-fg: #292524;
+        --body-bg: #fffaf5;
+        --darkened-bg: #ffedd5;
+        --selected-row: #fff7ed;
+        --hairline-color: #fed7aa;
+        --link-fg: #c2410c;
+        --link-hover-color: #7c2d12;
+    }
+
+    body {
+        background: #fffaf5;
+    }
+
+    #container {
+        background: #fffaf5;
+    }
+
+    #header {
+        background: #1c1917;
+        color: #fff7ed;
+        border-bottom: 4px solid #ea580c;
+    }
+
+    #branding h1 a,
+    #branding h1 {
+        color: #fff7ed;
+        font-weight: 800;
+    }
+
+    #user-tools,
+    #user-tools a {
+        color: #fed7aa;
+    }
+
+    div.breadcrumbs {
+        background: #7c2d12;
+        color: #ffedd5;
+    }
+
+    div.breadcrumbs a {
+        color: #fff7ed;
+    }
+
+    .module h2,
+    .module caption,
+    .inline-group h2 {
+        background: #c2410c;
+    }
+
+    .submit-row input.default,
+    input[type="submit"],
+    input[type="button"],
+    .button {
+        background: #c2410c;
+        border-radius: 8px;
+    }
+
+    .submit-row input.default:hover,
+    input[type="submit"]:hover,
+    input[type="button"]:hover,
+    .button:hover {
+        background: #9a3412;
+    }
+
+    a:link,
+    a:visited {
+        color: #c2410c;
+    }
+
+    a:hover {
+        color: #7c2d12;
+    }
+
+    #content-main .module,
+    #content-related .module {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 6px 6px 0 rgba(251, 146, 60, .13);
+    }
+
+    .dashboard #content-main {
+        width: 100%;
+    }
+
+    .dashboard #content-main .module {
+        background: rgba(255, 255, 255, .92);
+        border: 1px solid #fed7aa;
+    }
+
+    .dashboard #content-main .module caption,
+    .dashboard #content-main .module h2 {
+        padding: 12px 16px;
+        background: #7c2d12;
+        color: #fff7ed;
+        font-weight: 800;
+    }
+
+    .dashboard #content-main .module table {
+        background: transparent;
+    }
+
+    .dashboard #content-main .module tr:nth-child(even),
+    .dashboard #content-related .module li:nth-child(even) {
+        background: #fff7ed;
+    }
+
+    .dashboard #content-main .module td,
+    .dashboard #content-main .module th {
+        padding: 12px 16px;
+        border-color: #fed7aa;
+    }
+
+    #content-related {
+        margin-right: 0;
+    }
+
+    #content-related .module {
+        background: #fff;
+        border: 1px solid #fed7aa;
+    }
+
+    #content-related .module h2,
+    #content-related .module h3 {
+        color: #7c2d12;
+    }
+
+    .object-tools a,
+    .addlink,
+    .changelink,
+    .deletelink {
+        border-radius: 7px;
+    }
+</style>
+{% endblock %}
+
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">Recepción <span style="color:#fb923c">& visitas</span></a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}

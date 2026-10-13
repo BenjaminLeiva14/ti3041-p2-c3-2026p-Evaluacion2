@@ -71,7 +71,8 @@ ROOT_URLCONF = 'core.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        # Prioriza las plantillas personalizadas del proyecto sobre las de Django.
+        'DIRS': [BASE_DIR / 'caso1_visitas' / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

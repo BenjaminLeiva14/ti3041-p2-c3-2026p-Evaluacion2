@@ -25,7 +25,7 @@
     <a href="#contenido" class="sr-only z-50 rounded-lg bg-stone-950 px-4 py-3 font-semibold text-white focus:not-sr-only focus:absolute focus:left-4 focus:top-4">Saltar al contenido</a>
     <header class="border-b border-orange-200/80 bg-stone-950 px-4 py-4 text-orange-50 shadow-xl shadow-orange-950/10 sm:px-8 sm:py-5">
         <nav aria-label="Navegación principal" class="mx-auto flex max-w-7xl items-center justify-between gap-6">
-            <a href="{% url 'visita_list' %}" class="flex items-center gap-3 rounded-xl px-2 py-1.5 font-semibold tracking-tight text-stone-950 transition hover:bg-orange-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-700">
+            <a href="{% url 'visita_list' %}" class="flex items-center gap-3 rounded-xl px-2 py-1.5 font-semibold tracking-tight text-orange-50 transition hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-300">
                 <span class="flex size-10 items-center justify-center rounded-xl bg-orange-700 text-white shadow-sm" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" class="size-5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19.13a9 9 0 1 0-6 0M12 12a3.75 3.75 0 1 0 0-7.5A3.75 3.75 0 0 0 12 12Z" /><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25v4.5m2.25-2.25h-4.5" /></svg>
                 </span>
@@ -46,6 +46,16 @@
         </nav>
     </header>
     <main id="contenido" class="mx-auto w-full max-w-7xl px-4 py-8 sm:px-8 sm:py-12 lg:px-12">
+        {% if messages %}
+        <div class="mx-auto mb-8 max-w-5xl space-y-3" aria-live="polite">
+            {% for message in messages %}
+            <div class="{% if message.tags == 'success' %}border-lime-300 bg-lime-50 text-lime-900{% elif message.tags == 'error' %}border-red-300 bg-red-50 text-red-900{% elif message.tags == 'warning' %}border-amber-300 bg-amber-50 text-amber-900{% else %}border-orange-300 bg-orange-50 text-orange-900{% endif %} flex items-start gap-3 rounded-xl border px-4 py-3 text-sm font-semibold shadow-sm" role="status">
+                <span class="mt-0.5" aria-hidden="true">{% if message.tags == 'success' %}✓{% elif message.tags == 'error' %}!{% else %}•{% endif %}</span>
+                <p>{{ message }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
         {% block content %}{% endblock %}
     </main>
     <footer class="mx-auto max-w-6xl px-4 pb-8 text-center text-sm text-slate-500 sm:px-8">
