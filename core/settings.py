@@ -38,6 +38,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'ti3041-p2-c3-2026p-evaluacion2-v2.vercel.app',
+    'agenda-visitas-evaluacion2.vercel.app',
     'localhost',
     '127.0.0.1'
 ]
