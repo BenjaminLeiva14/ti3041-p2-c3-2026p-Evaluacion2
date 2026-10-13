@@ -21,11 +21,15 @@
     <div class="mt-10 flex items-center justify-between border-b-2 border-stone-950 pb-3"><h2 class="text-lg font-black text-stone-950">Movimiento reciente</h2><span class="text-xs font-bold uppercase tracking-wider text-stone-500">Detalle de acceso</span></div>
     <div class="mt-4 space-y-3">
             {% for visita in object_list %}
-                <article class="group relative grid gap-4 border border-orange-100 bg-white/80 p-5 shadow-[6px_6px_0_rgba(251,146,60,0.12)] transition hover:-translate-y-0.5 hover:border-orange-300 sm:grid-cols-[minmax(13rem,1.3fr)_minmax(8rem,.8fr)_minmax(14rem,2fr)_auto] sm:items-center sm:px-6">
+                <article class="group relative grid gap-4 border border-orange-100 bg-white/80 p-5 shadow-[6px_6px_0_rgba(251,146,60,0.12)] transition hover:-translate-y-0.5 hover:border-orange-300 sm:grid-cols-[minmax(11rem,1.2fr)_minmax(11rem,1.2fr)_minmax(8rem,.8fr)_minmax(14rem,2fr)_auto] sm:items-center sm:px-6">
                     <div class="absolute bottom-0 left-0 top-0 w-1 bg-orange-500 opacity-0 transition group-hover:opacity-100"></div>
                     <div class="flex items-center justify-between gap-4 sm:block sm:text-right">
-                        <p class="text-xs font-bold uppercase tracking-wider text-orange-700 sm:hidden">Visitante</p>
-                        <p class="font-bold text-stone-950">{{ visita.nombre }}</p>
+                        <p class="text-xs font-bold uppercase tracking-wider text-orange-700 sm:hidden">Nombre</p>
+                        <p class="font-bold text-stone-950">{{ visita.persona.nombre }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs font-bold uppercase tracking-wider text-orange-700 sm:hidden">Apellido</p>
+                        <p class="text-stone-600">{{ visita.persona.apellido }}</p>
                     </div>
                     <div>
                         <p class="text-xs font-bold uppercase tracking-wider text-orange-700 sm:hidden">RUT</p>
