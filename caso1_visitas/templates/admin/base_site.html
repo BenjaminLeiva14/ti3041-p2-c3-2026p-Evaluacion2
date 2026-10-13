@@ -91,10 +91,14 @@
     }
 
     .dashboard #content-main {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 22px;
         width: 100%;
     }
 
     .dashboard #content-main .module {
+        margin-bottom: 0;
         background: rgba(255, 255, 255, .92);
         border: 1px solid #fed7aa;
     }
@@ -141,6 +145,12 @@
     .changelink,
     .deletelink {
         border-radius: 7px;
+    }
+
+    @media (max-width: 700px) {
+        .dashboard #content-main {
+            grid-template-columns: 1fr;
+        }
     }
 </style>
 {% endblock %}
