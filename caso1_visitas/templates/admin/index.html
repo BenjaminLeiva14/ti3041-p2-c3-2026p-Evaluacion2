@@ -1,0 +1,310 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static admin_filters log %}
+
+{% block title %}{{ title }} | {{ site_title }}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}" {% csp_nonce_attr %}>
+<style>
+    .admin-dashboard {
+        display: grid;
+        gap: 24px;
+    }
+
+    .admin-dashboard__hero {
+        position: relative;
+        overflow: hidden;
+        padding: 32px;
+        border-left: 6px solid #ea580c;
+        border-radius: 12px;
+        background: linear-gradient(120deg, #1c1917 0%, #431407 100%);
+        color: #fff7ed;
+        box-shadow: 10px 10px 0 rgba(251, 146, 60, .14);
+    }
+
+    .admin-dashboard__hero::after {
+        position: absolute;
+        right: 34px;
+        bottom: -70px;
+        width: 170px;
+        height: 170px;
+        border: 20px solid rgba(251, 146, 60, .2);
+        border-radius: 999px;
+        content: "";
+    }
+
+    .admin-dashboard__eyebrow {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        color: #fdba74;
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: .18em;
+        text-transform: uppercase;
+    }
+
+    .admin-dashboard__hero h1 {
+        position: relative;
+        z-index: 1;
+        max-width: 720px;
+        margin: 8px 0 10px;
+        color: #fff7ed;
+        font-size: clamp(28px, 4vw, 44px);
+        font-weight: 800;
+        line-height: 1.08;
+    }
+
+    .admin-dashboard__hero p:last-child {
+        position: relative;
+        z-index: 1;
+        max-width: 650px;
+        margin: 0;
+        color: #fed7aa;
+        font-size: 15px;
+    }
+
+    .admin-dashboard__stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+    .admin-dashboard__stat {
+        min-height: 112px;
+        padding: 18px;
+        border: 1px solid #fed7aa;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 5px 5px 0 rgba(251, 146, 60, .12);
+    }
+
+    .admin-dashboard__stat strong {
+        display: block;
+        color: #7c2d12;
+        font-size: 30px;
+        line-height: 1;
+    }
+
+    .admin-dashboard__stat span {
+        display: block;
+        margin-top: 10px;
+        color: #78716c;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .admin-dashboard__section-title {
+        margin: 0 0 12px;
+        color: #292524;
+        font-size: 20px;
+        font-weight: 800;
+    }
+
+    .admin-dashboard__modules {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 18px;
+    }
+
+    .admin-dashboard__module {
+        overflow: hidden;
+        border: 1px solid #fed7aa;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 6px 6px 0 rgba(251, 146, 60, .13);
+    }
+
+    .admin-dashboard__module header {
+        padding: 17px 20px;
+        background: #7c2d12;
+    }
+
+    .admin-dashboard__module header h2 {
+        margin: 0;
+        color: #fff7ed;
+        font-size: 18px;
+    }
+
+    .admin-dashboard__module header p {
+        margin: 5px 0 0;
+        color: #fed7aa;
+        font-size: 12px;
+    }
+
+    .admin-dashboard__model {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 20px;
+        border-top: 1px solid #ffedd5;
+    }
+
+    .admin-dashboard__model a {
+        font-weight: 800;
+    }
+
+    .admin-dashboard__actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    .admin-dashboard__actions a {
+        display: inline-block;
+        padding: 7px 10px;
+        border-radius: 7px;
+        background: #fff7ed;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .admin-dashboard__lower {
+        display: grid;
+        grid-template-columns: minmax(0, 1.5fr) minmax(260px, .8fr);
+        gap: 18px;
+    }
+
+    .admin-dashboard__panel {
+        padding: 20px;
+        border: 1px solid #fed7aa;
+        border-radius: 10px;
+        background: #fff;
+        box-shadow: 6px 6px 0 rgba(251, 146, 60, .1);
+    }
+
+    .admin-dashboard__panel h2 {
+        margin: 0 0 12px;
+        color: #7c2d12;
+        font-size: 17px;
+    }
+
+    .admin-dashboard__panel ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .admin-dashboard__panel li {
+        padding: 10px 0;
+        border-bottom: 1px solid #ffedd5;
+        font-size: 13px;
+    }
+
+    .admin-dashboard__panel li:last-child {
+        border-bottom: 0;
+    }
+
+    @media (max-width: 800px) {
+        .admin-dashboard__stats,
+        .admin-dashboard__lower {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .admin-dashboard__hero {
+            padding: 24px;
+        }
+
+        .admin-dashboard__stats {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+{% block nav-breadcrumbs %}{% endblock %}
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+<div class="admin-dashboard">
+    <section class="admin-dashboard__hero" aria-labelledby="admin-dashboard-title">
+        <p class="admin-dashboard__eyebrow">Centro de control</p>
+        <h1 id="admin-dashboard-title">Todo listo para organizar tus visitas.</h1>
+        <p>Administra personas, registra movimientos y mantén actualizado el estado de recepción desde un solo lugar.</p>
+    </section>
+
+    <section class="admin-dashboard__stats" aria-label="Resumen del panel">
+        <div class="admin-dashboard__stat">
+            <strong>{{ app_list|length }}</strong>
+            <span>Aplicación disponible</span>
+        </div>
+        <div class="admin-dashboard__stat">
+            <strong>{% for app in app_list %}{{ app.models|length }}{% endfor %}</strong>
+            <span>Módulos administrables</span>
+        </div>
+        <div class="admin-dashboard__stat">
+            <strong>24/7</strong>
+            <span>Control de recepción</span>
+        </div>
+    </section>
+
+    <section aria-labelledby="admin-modules-title">
+        <h2 id="admin-modules-title" class="admin-dashboard__section-title">Módulos de trabajo</h2>
+        <div class="admin-dashboard__modules">
+            {% for app in app_list %}
+            <article class="admin-dashboard__module">
+                <header>
+                    <h2><a href="{{ app.app_url }}" style="color:#fff7ed">{{ app.name }}</a></h2>
+                    <p>Gestiona la información de {{ app.name|lower }}.</p>
+                </header>
+                {% for model in app.models %}
+                <div class="admin-dashboard__model">
+                    <a href="{{ model.admin_url }}">{{ model.name }}</a>
+                    <div class="admin-dashboard__actions">
+                        {% if model.add_url %}<a href="{{ model.add_url }}">+ Agregar</a>{% endif %}
+                        {% if model.admin_url %}<a href="{{ model.admin_url }}">Ver lista</a>{% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </article>
+            {% empty %}
+            <article class="admin-dashboard__panel">
+                <p>No tienes módulos disponibles para administrar.</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <div class="admin-dashboard__lower">
+        <section class="admin-dashboard__panel" aria-labelledby="admin-guide-title">
+            <h2 id="admin-guide-title">Flujo recomendado</h2>
+            <ul>
+                <li><strong>1.</strong> Revisa o busca una persona por su RUT.</li>
+                <li><strong>2.</strong> Consulta las visitas ordenadas por fecha.</li>
+                <li><strong>3.</strong> Usa la acción masiva para marcar salidas pendientes.</li>
+            </ul>
+        </section>
+        <section class="admin-dashboard__panel" aria-labelledby="admin-actions-title">
+            <h2 id="admin-actions-title">Accesos rápidos</h2>
+            <ul>
+                <li><a href="{% url 'admin:caso1_visitas_visita_changelist' %}">Abrir visitas registradas →</a></li>
+                <li><a href="{% url 'admin:caso1_visitas_persona_changelist' %}">Abrir personas →</a></li>
+                <li><a href="{% url 'admin:caso1_visitas_visita_add' %}">Registrar visita →</a></li>
+            </ul>
+        </section>
+    </div>
+
+    <section class="admin-dashboard__panel">
+        <h2>Actividad reciente</h2>
+        {% get_admin_log 5 as admin_log for_user user %}
+        {% if admin_log %}
+        <ul>
+            {% for entry in admin_log %}
+            <li>
+                {% if entry.get_admin_url %}<a href="{{ entry.get_admin_url }}">{{ entry.object_repr|to_object_display_value }}</a>{% else %}{{ entry.object_repr|to_object_display_value }}{% endif %}
+                <span class="quiet"> · {{ entry.content_type|default:"Registro" }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p class="quiet">Todavía no hay actividad reciente para mostrar.</p>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}
