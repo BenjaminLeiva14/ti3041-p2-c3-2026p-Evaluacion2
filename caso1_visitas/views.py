@@ -3,6 +3,7 @@ from django.core.exceptions import PermissionDenied
 from django.contrib import messages
 from django.core.paginator import Paginator
 from django.shortcuts import render, get_object_or_404, redirect
+from django.views.decorators.cache import never_cache
 from .models import Visita
 from .forms import VisitaForm
 
@@ -10,6 +11,7 @@ from django.views.decorators.csrf import csrf_protect
 
 
 # Listado público de visitas, ordenado y dividido en páginas.
+@never_cache
 def visita_list(request):
     visitas = Visita.objects.select_related("persona").order_by(
         "-fecha",
@@ -29,6 +31,7 @@ def visita_list(request):
 
 
 # Ficha detallada de una visita registrada.
+@never_cache
 def visita_detail(request, pk):
     visita = get_object_or_404(
         Visita.objects.select_related("persona"),
